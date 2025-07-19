@@ -1,7 +1,7 @@
-package net.weesli.model;
+package net.weesli.rozsdblite.model;
 
-import net.weesli.io.AsyncManagement;
-import net.weesli.other.DatabaseSettings;
+import net.weesli.rozsdblite.io.AsyncManagement;
+import net.weesli.rozsdblite.other.DatabaseSettings;
 
 import java.io.File;
 import java.io.IOException;

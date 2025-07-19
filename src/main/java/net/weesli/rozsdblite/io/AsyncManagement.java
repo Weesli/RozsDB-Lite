@@ -1,9 +1,9 @@
-package net.weesli.io;
+package net.weesli.rozsdblite.io;
 
 import com.dslplatform.json.DslJson;
 import com.dslplatform.json.JsonReader;
-import net.weesli.model.Database;
-import net.weesli.util.CompressUtil;
+import net.weesli.rozsdblite.model.Database;
+import net.weesli.rozsdblite.util.CompressUtil;
 
 import java.io.IOException;
 import java.util.HashMap;

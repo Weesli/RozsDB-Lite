@@ -1,4 +1,4 @@
-package net.weesli.model;
+package net.weesli.rozsdblite.model;
 
 import java.util.List;
 

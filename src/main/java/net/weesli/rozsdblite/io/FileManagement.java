@@ -1,4 +1,4 @@
-package net.weesli.io;
+package net.weesli.rozsdblite.io;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

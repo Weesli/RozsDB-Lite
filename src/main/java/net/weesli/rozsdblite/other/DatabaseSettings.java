@@ -1,4 +1,4 @@
-package net.weesli.other;
+package net.weesli.rozsdblite.other;
 
 import java.lang.reflect.Field;
 
