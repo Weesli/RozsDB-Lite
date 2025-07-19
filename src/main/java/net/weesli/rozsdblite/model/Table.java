@@ -37,7 +37,7 @@ public class Table {
      * @return
      */
     public boolean put(String id, String data) {
-        parent.getAsyncManagement().put(tableName, id, data);
+        parent.getFileBaseManagement().put(tableName, id, data);
         return true;
     }
 
@@ -47,7 +47,7 @@ public class Table {
      * @return
      */
     public String get(String id) {
-        return parent.getAsyncManagement().get(tableName, id);
+        return parent.getFileBaseManagement().get(tableName, id);
     }
 
     /**
@@ -55,7 +55,7 @@ public class Table {
      * @return
      */
     public List<String> getAll() {
-        return parent.getAsyncManagement().getAll(tableName);
+        return parent.getFileBaseManagement().getAll(tableName);
     }
 
     /**
@@ -63,7 +63,7 @@ public class Table {
      * @param id
      */
     public void remove(String id) {
-        parent.getAsyncManagement().delete(tableName, id);
+        parent.getFileBaseManagement().delete(tableName, id);
     }
 
 }
