@@ -40,7 +40,7 @@ public class Database {
         return databaseSettings;
     }
 
-    public FileBaseManagement getAsyncManagement() {
+    public FileBaseManagement getFileBaseManagement() {
         return fileBaseManagement;
     }
 
