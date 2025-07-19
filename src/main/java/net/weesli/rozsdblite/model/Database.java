@@ -56,4 +56,11 @@ public class Database {
     public Table getTable(String tableName) {
         return new Table(this, tableName);
     }
+
+    /**
+     * save all the data to the database file in disk
+     */
+    public void save(){
+        fileBaseManagement.save();
+    }
 }
