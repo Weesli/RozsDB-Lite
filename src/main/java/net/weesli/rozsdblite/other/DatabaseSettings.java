@@ -2,8 +2,11 @@ package net.weesli.rozsdblite.other;
 
 import java.lang.reflect.Field;
 
+/**
+ * Settings defined on the database when the database is opened.
+ * There are currently no settings!
+ */
 public class DatabaseSettings {
-    private final boolean autoCreate = false;
     private final boolean autoCreateTable = false;
     public DatabaseSettings() {}
 
@@ -49,10 +52,6 @@ public class DatabaseSettings {
         }catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean isAutoCreate() {
-        return autoCreate;
     }
 
     public boolean isAutoCreateTable() {

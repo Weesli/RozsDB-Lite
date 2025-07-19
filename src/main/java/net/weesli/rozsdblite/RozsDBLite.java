@@ -1,6 +1,7 @@
 package net.weesli.rozsdblite;
 
 import net.weesli.rozsdblite.model.Database;
+import net.weesli.rozsdblite.model.Table;
 import net.weesli.rozsdblite.other.DatabaseSettings;
 
 import java.nio.file.Path;

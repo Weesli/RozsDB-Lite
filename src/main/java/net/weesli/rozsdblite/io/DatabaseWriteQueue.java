@@ -14,9 +14,10 @@ public class DatabaseWriteQueue {
     private FileManagement fileManagement;
     private HashMap<String, LinkedHashMap<String, String>> writeQueue = new HashMap<>();
     private Database database;
-    public DatabaseWriteQueue(FileManagement fileManagement, Database database) {
+        public DatabaseWriteQueue(FileManagement fileManagement, Database database) {
         this.fileManagement = fileManagement;
         this.database = database;
+
     }
 
     public LinkedHashMap<String, String> getWriteQueue(String tableName) {

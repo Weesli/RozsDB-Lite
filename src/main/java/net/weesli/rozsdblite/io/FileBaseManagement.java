@@ -44,21 +44,27 @@ public class FileBaseManagement {
     public void put(String tableName, String id, String data) {
         LinkedHashMap<String, String> map = databaseWriteQueue.getWriteQueue(tableName);
         map.put(id, data);
-        databaseWriteQueue.flush();
     }
 
     public void delete(String tableName, String id) {
         LinkedHashMap<String, String> map = databaseWriteQueue.getWriteQueue(tableName);
         map.remove(id);
-        databaseWriteQueue.flush();
     }
     public String get(String tableName, String id) {
         LinkedHashMap<String, String> map = databaseWriteQueue.getWriteQueue(tableName);
         return map.get(id);
     }
 
+    public void save() {
+        databaseWriteQueue.flush();
+    }
+
     public List<String> getAll(String tableName) {
         LinkedHashMap<String, String> map = databaseWriteQueue.getWriteQueue(tableName);
         return new ArrayList<>(map.values());
+    }
+
+    public HashMap<String, LinkedHashMap<String, String>> getWriteQueue() {
+        return databaseWriteQueue.getWriteQueue();
     }
 }

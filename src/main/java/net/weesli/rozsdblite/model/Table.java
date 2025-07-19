@@ -28,18 +28,40 @@ public class Table {
         return false;
     }
 
-    // table objects management
+    // usable methods for users
 
+    /**
+     * Method for sending data to the print queue
+     * @param id
+     * @param data
+     * @return
+     */
     public boolean put(String id, String data) {
         parent.getAsyncManagement().put(tableName, id, data);
         return true;
     }
+
+    /**
+     * Method for getting data from the print queue
+     * @param id
+     * @return
+     */
     public String get(String id) {
         return parent.getAsyncManagement().get(tableName, id);
     }
+
+    /**
+     * Method for getting all data from the print queue
+     * @return
+     */
     public List<String> getAll() {
         return parent.getAsyncManagement().getAll(tableName);
     }
+
+    /**
+     * Method for removing data from the print queue
+     * @param id
+     */
     public void remove(String id) {
         parent.getAsyncManagement().delete(tableName, id);
     }

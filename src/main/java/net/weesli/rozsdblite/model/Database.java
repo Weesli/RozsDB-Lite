@@ -12,7 +12,7 @@ public class Database {
     private String databaseName;
     private Path databasePath;
     private DatabaseSettings databaseSettings;
-    private FileBaseManagement asyncManagement;
+    private FileBaseManagement fileBaseManagement;
 
     public Database(String databaseName, Path databasePath, DatabaseSettings databaseSettings) {
         this.databaseName = databaseName;
@@ -25,7 +25,7 @@ public class Database {
             }
         }
         this.databaseSettings = databaseSettings;
-        this.asyncManagement = new FileBaseManagement(this);
+        this.fileBaseManagement = new FileBaseManagement(this);
     }
 
     public String getDatabaseName() {
@@ -41,8 +41,18 @@ public class Database {
     }
 
     public FileBaseManagement getAsyncManagement() {
-        return asyncManagement;
+        return fileBaseManagement;
     }
+
+    // usable methods for users
+
+    /**
+     * Returns a table from the database
+     * if the table is not initialized, it will be created
+     *
+     * @param tableName
+     * @return
+     */
     public Table getTable(String tableName) {
         return new Table(this, tableName);
     }
