@@ -6,12 +6,10 @@ import net.weesli.rozsdblite.model.Database;
 import net.weesli.rozsdblite.util.CompressUtil;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class AsyncManagement {
 
@@ -65,6 +63,6 @@ public class AsyncManagement {
 
     public List<String> getAll(String tableName) {
         LinkedHashMap<String, String> map = databaseWriteQueue.getWriteQueue(tableName);
-        return map.values().stream().toList();
+        return new ArrayList<>(map.values());
     }
 }
