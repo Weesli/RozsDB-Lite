@@ -7,23 +7,19 @@ import net.weesli.rozsdblite.util.CompressUtil;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
-public class AsyncManagement {
+public class FileBaseManagement {
 
     private static final DslJson<HashMap<String, LinkedHashMap<String, String>>> DslJson = new DslJson<>();
 
     private DatabaseWriteQueue databaseWriteQueue;
-    private ExecutorService executorService = Executors.newFixedThreadPool(1);
     private FileManagement fileManagement = new FileManagement();
     private Database database;
 
     @SuppressWarnings("unchecked")
-    public AsyncManagement(Database database) {
+    public FileBaseManagement(Database database) {
         this.database = database;
-        databaseWriteQueue = new DatabaseWriteQueue(executorService, fileManagement, database);
+        databaseWriteQueue = new DatabaseWriteQueue(fileManagement, database);
         // read all database files
         byte[] value = fileManagement.readDatabaseFile(database.getDatabasePath());
         if (value.length == 0 || value == null) {

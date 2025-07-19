@@ -1,6 +1,6 @@
 package net.weesli.rozsdblite.model;
 
-import net.weesli.rozsdblite.io.AsyncManagement;
+import net.weesli.rozsdblite.io.FileBaseManagement;
 import net.weesli.rozsdblite.other.DatabaseSettings;
 
 import java.io.File;
@@ -12,7 +12,7 @@ public class Database {
     private String databaseName;
     private Path databasePath;
     private DatabaseSettings databaseSettings;
-    private AsyncManagement asyncManagement;
+    private FileBaseManagement asyncManagement;
 
     public Database(String databaseName, Path databasePath, DatabaseSettings databaseSettings) {
         this.databaseName = databaseName;
@@ -25,7 +25,7 @@ public class Database {
             }
         }
         this.databaseSettings = databaseSettings;
-        this.asyncManagement = new AsyncManagement(this);
+        this.asyncManagement = new FileBaseManagement(this);
     }
 
     public String getDatabaseName() {
@@ -40,7 +40,7 @@ public class Database {
         return databaseSettings;
     }
 
-    public AsyncManagement getAsyncManagement() {
+    public FileBaseManagement getAsyncManagement() {
         return asyncManagement;
     }
     public Table getTable(String tableName) {
