@@ -16,6 +16,11 @@ public class FileManagement {
         this.database = database;
         writer = new Writer(database, this);
         reader = new Reader(database, this);
+        try {
+            cache.putAll(reader.read());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void put(String tableName, String id, String data) {
