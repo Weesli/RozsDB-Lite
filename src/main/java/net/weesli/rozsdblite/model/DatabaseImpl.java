@@ -1,20 +1,21 @@
 package net.weesli.rozsdblite.model;
 
-import net.weesli.rozsdblite.io.FileBaseManagement;
+import net.weesli.rozsdblite.interfaces.Database;
+import net.weesli.rozsdblite.io.FileManagement;
 import net.weesli.rozsdblite.other.DatabaseSettings;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class Database {
+public class DatabaseImpl implements Database {
 
     private String databaseName;
     private Path databasePath;
     private DatabaseSettings databaseSettings;
-    private FileBaseManagement fileBaseManagement;
+    private FileManagement fileManagement;
 
-    public Database(String databaseName, Path databasePath, DatabaseSettings databaseSettings) {
+    public DatabaseImpl(String databaseName, Path databasePath, DatabaseSettings databaseSettings) {
         this.databaseName = databaseName;
         this.databasePath = new File(databasePath.toFile(), databaseName + ".rozsdb").toPath();
         if (!this.databasePath.toFile().exists()) {
@@ -25,7 +26,7 @@ public class Database {
             }
         }
         this.databaseSettings = databaseSettings;
-        this.fileBaseManagement = new FileBaseManagement(this);
+        this.fileManagement = new FileManagement(this);
     }
 
     public String getDatabaseName() {
@@ -40,27 +41,16 @@ public class Database {
         return databaseSettings;
     }
 
-    public FileBaseManagement getFileBaseManagement() {
-        return fileBaseManagement;
+    public FileManagement getFileManagement() {
+        return fileManagement;
     }
 
     // usable methods for users
 
-    /**
-     * Returns a table from the database
-     * if the table is not initialized, it will be created
-     *
-     * @param tableName
-     * @return
-     */
-    public Table getTable(String tableName) {
-        return new Table(this, tableName);
+    public TableImpl getTable(String tableName) {
+        return new TableImpl(this, tableName);
     }
-
-    /**
-     * save all the data to the database file in disk
-     */
     public void save(){
-        fileBaseManagement.save();
+        fileManagement.save();
     }
 }

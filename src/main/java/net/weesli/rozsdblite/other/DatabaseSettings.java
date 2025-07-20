@@ -3,11 +3,32 @@ package net.weesli.rozsdblite.other;
 import java.lang.reflect.Field;
 
 /**
- * Settings defined on the database when the database is opened.
- * There are currently no settings!
+ * Represents the settings/configuration for a RozsDB database.
+ * <p>
+ * This class supports creating an instance of {@code DatabaseSettings}
+ * from a semicolon-separated key-value string via {@link #withString(String)}.
+ * </p>
+ * <p>
+ * The input string should be in the format:
+ * <pre>
+ *     "key1=value1;key2=value2;key3=value3"
+ * </pre>
+ * Keys are matched (case-insensitive) to the declared fields of this class,
+ * and values are parsed and assigned accordingly.
+ * </p>
+ * <p>
+ * Supports primitive types boolean, int, long, float, double, and String fields.
+ * </p>
+ *
+ * <p><b>Usage example:</b></p>
+ * <pre>
+ *     No settings found yet!
+ * </pre>
+ *
+ * @author Weesli
+ * @version 1.1.0
  */
 public class DatabaseSettings {
-    private final boolean autoCreateTable = false;
     public DatabaseSettings() {}
 
     public static DatabaseSettings withString(String string) {
@@ -52,9 +73,5 @@ public class DatabaseSettings {
         }catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean isAutoCreateTable() {
-        return autoCreateTable;
     }
 }

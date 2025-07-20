@@ -1,34 +1,61 @@
 package net.weesli.rozsdblite.io;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
+import net.weesli.rozsdblite.model.DatabaseImpl;
+import java.util.*;
 
 public class FileManagement {
-    public byte[] readDatabaseFile(Path path) {
-        if (!path.toFile().exists()) {
-            return null;
-        }
-        try (FileChannel fileChannel = FileChannel.open(path, StandardOpenOption.READ)) {
-            ByteBuffer byteBuffer = ByteBuffer.allocate((int) fileChannel.size());
-            fileChannel.read(byteBuffer);
-            byteBuffer.flip();
-            byte[] data = new byte[byteBuffer.remaining()];
-            byteBuffer.get(data);
-            return data;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+
+    private Writer writer;
+    private Reader reader;
+    private DatabaseImpl database;
+
+    private final HashMap<String, LinkedHashMap<String, String>> cache = new HashMap<>();
+
+    @SuppressWarnings("unchecked")
+    public FileManagement(DatabaseImpl database) {
+        this.database = database;
+        writer = new Writer(database, this);
+        reader = new Reader(database, this);
     }
 
-    public void writeDatabaseFile(Path path, byte[] data) {
-        try (FileChannel fileChannel = FileChannel.open(path, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE)) {
-            fileChannel.write(ByteBuffer.wrap(data));
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void put(String tableName, String id, String data) {
+        try {
+            LinkedHashMap<String, String> map = cache.computeIfAbsent(tableName, k -> new LinkedHashMap<>());
+            map.put(id, data);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    public void delete(String tableName, String id) {
+        try {
+            LinkedHashMap<String, String> map = cache.computeIfAbsent(tableName, k -> new LinkedHashMap<>());
+            map.remove(id);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public String get(String tableName, String id) {
+        try {
+            return cache.computeIfAbsent(tableName, k -> new LinkedHashMap<>()).get(id);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void save() {
+        writer.flush();
+    }
+
+    public List<String> getAll(String tableName) {
+        try {
+            return new ArrayList<>(cache.computeIfAbsent(tableName, k -> new LinkedHashMap<>()).values());
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public HashMap<String, LinkedHashMap<String, String>> getCache() {
+        return cache;
     }
 }
