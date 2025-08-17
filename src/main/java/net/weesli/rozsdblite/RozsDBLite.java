@@ -11,6 +11,6 @@ public final class RozsDBLite {
         return new DatabaseImpl(databaseName, databasePath, databaseSettings);
     }
     public static Database open(String databaseName, Path databasePath) {
-        return new DatabaseImpl(databaseName, databasePath, new DatabaseSettings());
+        return new DatabaseImpl(databaseName, databasePath, DatabaseSettings.empty());
     }
 }

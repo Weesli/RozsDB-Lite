@@ -76,4 +76,9 @@ public interface Database {
      * </p>
      */
     void save();
+
+    /**
+     * Closes the database and releases any associated resources.
+     */
+    void close();
 }

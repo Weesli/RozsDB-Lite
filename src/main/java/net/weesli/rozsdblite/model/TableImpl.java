@@ -6,8 +6,8 @@ import net.weesli.rozsdblite.interfaces.Table;
 import java.util.List;
 
 public class TableImpl implements Table {
-    private Database parent;
-    private String tableName;
+    private final Database parent;
+    private final String tableName;
 
     public TableImpl(Database parent, String tableName) {
         this.tableName = tableName;

@@ -22,14 +22,23 @@ import java.lang.reflect.Field;
  *
  * <p><b>Usage example:</b></p>
  * <pre>
- *     No settings found yet!
+ *     DatabaseSettings settings = DatabaseSettings.withString("autoSave=true;autoSaveInterval=3600");
  * </pre>
  *
  * @author Weesli
  * @version 1.1.0
  */
 public class DatabaseSettings {
+
+    private boolean autoSave = false;
+    // in seconds, if autoSave is enabled
+    private int autoSaveInterval = 10 * 60 * 60;
+
     public DatabaseSettings() {}
+
+    public static DatabaseSettings empty() {
+        return new DatabaseSettings();
+    }
 
     public static DatabaseSettings withString(String string) {
         DatabaseSettings settings = new DatabaseSettings();
@@ -73,5 +82,13 @@ public class DatabaseSettings {
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int getAutoSaveInterval() {
+        return autoSaveInterval;
+    }
+
+    public boolean isAutoSave() {
+        return autoSave;
     }
 }

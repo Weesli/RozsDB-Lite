@@ -11,7 +11,7 @@ public class FileManagement {
 
     private final HashMap<String, LinkedHashMap<String, String>> cache = new HashMap<>();
 
-    @SuppressWarnings("unchecked")
+
     public FileManagement(DatabaseImpl database) {
         this.database = database;
         writer = new Writer(database, this);
