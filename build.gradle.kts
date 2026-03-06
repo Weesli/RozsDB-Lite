@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "net.weesli"
-version = "1.2.0"
+version = "1.3.0"
 
 repositories {
     mavenCentral()
@@ -16,6 +16,7 @@ dependencies {
     implementation("com.dslplatform:dsl-json:2.0.2")
     annotationProcessor("com.dslplatform:dsl-json:2.0.2")
     implementation("javax.json.bind:javax.json.bind-api:1.0")
+    implementation("com.google.code.gson:gson:2.13.2")
 }
 
 tasks.test {
@@ -23,6 +24,6 @@ tasks.test {
 }
 java{
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }

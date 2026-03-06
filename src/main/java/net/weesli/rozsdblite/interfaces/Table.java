@@ -1,5 +1,6 @@
 package net.weesli.rozsdblite.interfaces;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -21,21 +22,21 @@ import java.util.List;
  * @author  Weesli
  * @version 1.0.0
  */
-public interface Table {
+public interface Table<T> {
 
     /**
      * Returns the name of the table.
      *
      * @return the table name
      */
-    String getTableName();
+    String tableName();
 
     /**
      * Returns the parent database that this table belongs to.
      *
      * @return the parent {@link Database}
      */
-    Database getParent();
+    Database parent();
 
     /**
      * Inserts or updates a record in the table.
@@ -44,7 +45,7 @@ public interface Table {
      * @param data the JSON string representing the record data
      * @return {@code true} if the operation succeeded, {@code false} otherwise
      */
-    boolean put(String id, String data);
+    boolean put(String id, T data);
 
     /**
      * Retrieves the record data for the specified ID.
@@ -52,14 +53,16 @@ public interface Table {
      * @param id the unique identifier for the record
      * @return the JSON string representing the record data, or {@code null} if not found
      */
-    String get(String id);
+    T get(String id);
+
+    T getOrPut(String id, T obj);
 
     /**
      * Returns all record data values in the table.
      *
      * @return a list of all JSON string data stored in the table
      */
-    List<String> getAll();
+    List<T> getAll();
 
     /**
      * Removes the record with the specified ID from the table.
@@ -67,4 +70,6 @@ public interface Table {
      * @param id the unique identifier for the record to remove
      */
     void remove(String id);
+
+    LinkedHashMap<String, T> cache();
 }

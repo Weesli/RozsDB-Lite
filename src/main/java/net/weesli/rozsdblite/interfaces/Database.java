@@ -67,7 +67,7 @@ public interface Database {
      * @param tableName the name of the table
      * @return the {@link Table} instance
      */
-    Table getTable(String tableName);
+    <T> Table<T> getTable(String tableName, Class<T> classOfT);
 
     /**
      * Persists all in-memory changes to the database file on disk.

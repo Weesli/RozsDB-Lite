@@ -2,6 +2,8 @@ package net.weesli.rozsdblite.io;
 
 import com.dslplatform.json.DslJson;
 import com.dslplatform.json.JsonWriter;
+import net.weesli.rozsdblite.RozsDBLite;
+import net.weesli.rozsdblite.interfaces.Table;
 import net.weesli.rozsdblite.model.DatabaseImpl;
 import net.weesli.rozsdblite.util.CompressUtil;
 
@@ -11,11 +13,9 @@ import java.nio.channels.AsynchronousFileChannel;
 import java.nio.channels.CompletionHandler;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 public class Writer {
 
@@ -30,8 +30,20 @@ public class Writer {
 
     public void flush() {
         try {
+            Map<String, LinkedHashMap<String, String>> data = new HashMap<>();
+
+            for (Table<?> table : database.getAllTables()) {
+                LinkedHashMap<String, String> jsonValues = table.cache().entrySet().stream()
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey,
+                                entry -> RozsDBLite.getGson().toJson(entry.getValue()),
+                                (oldValue, newValue) -> newValue,
+                                LinkedHashMap::new
+                        ));
+                data.put(table.tableName(), jsonValues);
+            }
             JsonWriter jsonWriter = DslJson.newWriter();
-            DslJson.serialize(jsonWriter, fileManagement.getCache());
+            DslJson.serialize(jsonWriter, data);
             byte[] compressed = CompressUtil.compress(jsonWriter.toByteArray());
             writeFileInParallel(database.getDatabasePath(), compressed, 10).get();
         } catch (Exception e) {
@@ -63,7 +75,7 @@ public class Writer {
     private static CompletableFuture<Void> writeChunkAsync(AsynchronousFileChannel channel, byte[] data, long position, int size) {
         ByteBuffer buffer = ByteBuffer.wrap(data, (int) position, size);
         CompletableFuture<Void> future = new CompletableFuture<>();
-        channel.write(buffer, position, null, new CompletionHandler<Integer, Object>() {
+        channel.write(buffer, position, null, new CompletionHandler<>() {
             @Override
             public void completed(Integer result, Object attachment) {
                 future.complete(null);
