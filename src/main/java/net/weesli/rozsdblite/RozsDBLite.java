@@ -9,7 +9,7 @@ import java.nio.file.Path;
 
 public final class RozsDBLite {
 
-    private static Gson gson;
+    private static Gson gson = new Gson();
 
     public static Database open(String databaseName, Path databasePath, DatabaseSettings databaseSettings) {
         return new DatabaseImpl(databaseName, databasePath, databaseSettings);
