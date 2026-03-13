@@ -6,11 +6,10 @@ import net.weesli.rozsdblite.io.FileManagement;
 import net.weesli.rozsdblite.other.DatabaseSettings;
 import net.weesli.rozsdblite.scheduler.RozsScheduler;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class DatabaseImpl implements Database {
@@ -23,13 +22,19 @@ public class DatabaseImpl implements Database {
 
     public DatabaseImpl(String databaseName, Path databasePath, DatabaseSettings databaseSettings) {
         this.databaseName = databaseName;
-        this.databasePath = new File(databasePath.toFile(), databaseName + ".rozsdb").toPath();
-        if (!this.databasePath.toFile().exists()) {
-            try {
-                this.databasePath.toFile().createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        this.databasePath = databasePath.resolve(databaseName + ".rozsdb");
+
+        try {
+            Path parentDir = this.databasePath.getParent();
+            if (parentDir != null) {
+                Files.createDirectories(parentDir);
             }
+
+            if (!Files.exists(this.databasePath)) {
+                Files.createFile(this.databasePath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         this.databaseSettings = databaseSettings;
         this.fileManagement = new FileManagement(this);
